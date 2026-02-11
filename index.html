@@ -29,6 +29,18 @@
       box-sizing: border-box;
     }
     .muted { color: #6b7280; font-size: 12px; margin-top: 6px; }
+  
+    .plane-swatch{
+      width: 18px; height: 18px;
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      border: 1px solid rgba(0,0,0,0.35);
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1;
+      background: #fff;
+    }
+
   </style>
 </head>
 <body>
@@ -42,6 +54,9 @@
     <div class="legend-row"><span class="swatch" style="background:#10b981"></span><span>3/21 (Sat)-3/22 (Sun) : Bus A (Church in Puli Township— 1st Meeting Hall)</span></div>
     <div class="legend-row"><span class="swatch" style="background:#3b82f6"></span><span>3/21 (Sat)-3/22 (Sun) : Bus B (Church in Shetou Township)</span></div>
     <div class="legend-row"><span class="swatch" style="background:#8b5cf6"></span><span>3/22 (Sun)-3/23 (Mon) : Church in Taoyuan City — Meeting Hall 2</span></div>
+
+    <div class="legend-row"><span class="plane-swatch">✈️</span><span>TPE Airport — Terminal 1 </span></div>
+    <div class="legend-row"><span class="plane-swatch">✈️</span><span>TPE Airport — Terminal 2 </span></div>
     <div class="muted">Click a colored marker to view details.</div>
   </div>
 
@@ -55,7 +70,14 @@
       { date: "3/22 (Sun)-3/23 (Mon)", color: "#8b5cf6", name: "Church in Taoyuan City — Meeting Hall 2", Lat: 24.95565,  Lon: 121.22391 }
     ];
 
-    const map = L.map("map", {
+    
+
+    // Airport terminals (airplane icon markers)
+    const airports = [
+      { name: "TPE Airport — Terminal 1", Lat: 25.0816597157, Lon: 121.237482896 },
+      { name: "TPE Airport — Terminal 2", Lat: 25.07695904,   Lon: 121.232123104 }
+    ];
+const map = L.map("map", {
       center: [24.3, 121.0],
       zoom: 8,
       zoomControl: true
@@ -85,6 +107,28 @@
       `);
 
       bounds.push([p.Lat, p.Lon]);
+    });
+
+
+    // Airplane icon (DivIcon)
+    const planeIcon = L.divIcon({
+      html: '<div style="font-size:20px;line-height:20px">✈️</div>',
+      className: "",
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+      popupAnchor: [0, -12]
+    });
+
+    airports.forEach(a => {
+      const m = L.marker([a.Lat, a.Lon], { icon: planeIcon }).addTo(map);
+      m.bindPopup(`
+        <div style="font-size:14px;line-height:1.5">
+          <div style="font-weight:700">${a.name}</div>
+          <div>Lat: ${a.Lat}</div>
+          <div>Lon: ${a.Lon}</div>
+        </div>
+      `);
+      bounds.push([a.Lat, a.Lon]);
     });
 
     map.fitBounds(bounds, { padding: [30, 30] });
