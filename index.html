@@ -48,11 +48,11 @@
   <script>
     // 5 points with colors
     const places = [
-      { date: "3/19 (Thu)", color: "#ef4444", name: "Church in Hsinchu City  — Renai Meeting Hall", lat: 24.80855,  lng: 120.97089 },
-      { date: "3/20 (Fri)", color: "#f59e0b", name: "Church in Taichung City — Fuxing Building", lat: 24.13420, lng: 120.68158 },
-      { date: "3/21 (Sat) Bus A", color: "#10b981", name: "Church in Puli Township — 1st Meeting Hall", lat: 23.97805, lng: 120.97039 },
-      { date: "3/21 (Sat) Bus B", color: "#3b82f6", name: "Church in Shetou Township", lat: 23.89649,  lng: 120.58542 },
-      { date: "3/22 (Sun)", color: "#8b5cf6", name: "Church in Taoyuan City — Meeting Hall 2", lat: 24.95565,  lng: 121.22391 }
+      { date: "3/19 (Thu)", color: "#ef4444", name: "Church in Hsinchu City  — Renai Meeting Hall", Lat: 24.80855,  Lon: 120.97089 },
+      { date: "3/20 (Fri)", color: "#f59e0b", name: "Church in Taichung City — Fuxing Building", Lat: 24.13420, Lon: 120.68158 },
+      { date: "3/21 (Sat) Bus A", color: "#10b981", name: "Church in Puli Township — 1st Meeting Hall", Lat: 23.97805, Lon: 120.97039 },
+      { date: "3/21 (Sat) Bus B", color: "#3b82f6", name: "Church in Shetou Township", Lat: 23.89649,  Lon: 120.58542 },
+      { date: "3/22 (Sun)", color: "#8b5cf6", name: "Church in Taoyuan City — Meeting Hall 2", Lat: 24.95565,  Lon: 121.22391 }
     ];
 
     const map = L.map("map", {
@@ -68,7 +68,7 @@
 
     const bounds = [];
     places.forEach(p => {
-      const marker = L.circleMarker([p.lat, p.lng], {
+      const marker = L.circleMarker([p.Lat, p.Lon], {
         radius: 9,
         color: "rgba(0,0,0,0.45)",
         weight: 2,
@@ -79,12 +79,12 @@
       marker.bindPopup(`
         <div style="font-size:14px;line-height:1.5">
           <div style="font-weight:700">${p.date}：${p.name}</div>
-          <div>Lat: ${p.lat}</div>
-          <div>Lng: ${p.lng}</div>
+          <div>Lat: ${p.Lat}</div>
+          <div>Lon: ${p.Lon}</div>
         </div>
       `);
 
-      bounds.push([p.lat, p.lng]);
+      bounds.push([p.Lat, p.Lon]);
     });
 
     map.fitBounds(bounds, { padding: [30, 30] });
